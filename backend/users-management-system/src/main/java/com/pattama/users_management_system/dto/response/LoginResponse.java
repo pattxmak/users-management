@@ -12,6 +12,6 @@ public class LoginResponse {
     private String refreshToken;
     private String expirationTime;
     private String message;
-
+    private String role;
 
 }

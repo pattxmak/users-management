@@ -62,15 +62,12 @@ public class UserService {
 
     public LoginResponse login(LoginRequest loginRequest) {
         try {
-            // Spring Security จะตรวจสอบอีเมลและรหัสผ่าน
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
             );
         } catch (BadCredentialsException e) {
-            // กรณีรหัสผ่านผิด
             throw UserException.loginFailPasswordIncorrect();
         } catch (UsernameNotFoundException e) {
-            // กรณีอีเมลไม่พบ (ถ้า UserDetailsService โยนตัวนี้)
             throw UserException.loginFailEmailNotFound();
         }
 
@@ -80,7 +77,7 @@ public class UserService {
         String jwt = jwtUtils.generateToken(user);
         String refreshToken = jwtUtils.generateRefreshToken(new HashMap<>(), user);
 
-        return new LoginResponse(200, jwt, refreshToken, "1Hr", "User has been logged in successfully");
+        return new LoginResponse(200, jwt, refreshToken, "1Hr", "User has been logged in successfully", user.getRole());
     }
 
     public RefreshTokenResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {

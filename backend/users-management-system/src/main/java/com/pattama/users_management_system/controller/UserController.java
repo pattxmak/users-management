@@ -23,7 +23,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/auth/register")
+    @PostMapping("/admin/register")
     public ResponseEntity<UserResponse> register(@RequestBody RegisterRequest request) {
         UserResponse response = userService.register(request);
         return ResponseEntity.ok(response);
